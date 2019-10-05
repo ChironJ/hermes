@@ -27,6 +27,16 @@
                 }
             },
             {
+                "tip": "My Sub, 订阅 depth 数据",
+                "intf_no": "sd_CW",
+                "context_path": "market.$symbol.depth.$type",
+                "param_symbol": ["BTC_CW", "BTC_NW", "BTC_CQ"],
+                "sample": {
+                    "sub": "market.BTC_CW.depth.step0",
+                    "id": "id1"
+                }
+            },
+            {
                 "tip": "SUB_1, 订阅 KLine 数据",
                 "intf_no": "s1",
                 "context_path": "market.$symbol.kline.$period",

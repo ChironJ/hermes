@@ -1,15 +1,25 @@
 const WebSocket = require('ws');
 const pako = require('pako');
+const config = require('./config/data_stgy.json');
+const DataStgy = require('./stgy/data_stgy');
 
-var ms = require('./ms');
+var log = require('./log');
 class WsMgr {
     constructor(url) {
         this._ws = new WebSocket(url);
+        this.init_ws();
+        this.agentchain = new Map();
+        console.log(config.data_stgy_list);
+        for (let x of config.data_stgy_list) {
+            this.agentchain.set(x, DataStgy[x]);
+        }
+    }
+    init_ws() {
         this._ws.on('open', () => {
-            ms.logger.info("socket open");
+            log.logger.info("socket open");
         });
         this._ws.on('close', () => {
-            ms.logger.info("socket close");
+            log.logger.info("socket close");
         });
         this._ws.on('message', (data) => {
             let text = pako.inflate(data, {
@@ -20,20 +30,30 @@ class WsMgr {
                 ws.send(JSON.stringify({
                     pong: msg.ping
                 }));
+                log.logger.info("socket ping");
             } else if (msg.tick) {
-                ms.logger.info("socket msg");
-                console.log(msg.tick.asks);
-                console.log(msg.tick.bids);
-                console.log(msg);
+                //ms.logger.info("socket msg");
+                for (let v of this.agentchain.values()) {
+                    v(msg);
+                }
                 // handle(msg);
             } else {
-                console.log("begin text");
-                console.log(text);
-                console.log("end text");
+                log.logger.info("socket text "+ text);
             }
         });
     }
     get_ws() { return this._ws; }
+
+    ws_subscribe(symbol, type, id) {
+        symbol = symbol || "BTC_CQ"
+        type = type || "step0"
+        id = id || "id1"
+        const body = {};
+        body["sub"] = "market." + symbol + ".depth." + type;
+        body["id"] = id
+        console.log(body);
+        body && this._ws.send(JSON.stringify(body));
+    }
 }
 
 module.exports = WsMgr;
