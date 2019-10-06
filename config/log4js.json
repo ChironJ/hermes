@@ -12,6 +12,6 @@
     },
     "replaceConsole": true,
     "categories": {
-        "default": {"appenders":["stdout", "app"], "level":"ALL"}
+        "default": {"appenders":["app"], "level":"ALL"}
     }
 }
