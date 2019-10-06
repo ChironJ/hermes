@@ -1,4 +1,4 @@
-var log4js = require("log4js");
+const log4js = require("log4js");
 
 exports.log4js_config = require("./config/log4js.json");
 
