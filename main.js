@@ -1,13 +1,14 @@
 const config = require('config');
+const log = require('./log');
 const WsMgr = require('./ws_mgr.class.js');
 
 process.on('uncaughtException', (error => {
-    console.error(error);
+    log.logger.error(error);
     // process.exit(1);
 }));
 
 process.on('unhandledRejection', (reason, p) => {
-    console.error('Unhandled Rejection at:', p, 'reason:', reason);
+    log.logger.error('Unhandled Rejection at:', p, 'reason:', reason);
     // process.exit(1);
 });
 
@@ -31,4 +32,4 @@ async function main() {
     });
 }
 
-main().then(() => console.log('app start success')).catch((e) => console.error(e));
+main().then(() => log.logger.info('app start success')).catch((e) => log.logger.error(e));
