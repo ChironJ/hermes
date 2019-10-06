@@ -21,10 +21,10 @@ class DataStgy {
         //log.logger.info(msg.tick);
         //console.log(msg.tick.ch);
         client.set(msg.tick.ch, JSON.stringify(msg.tick));
-        log.logger.info("###{\"ch\":\"" + msg.tick.ch +
-            "\",\"ask\":\"" + ask1 +
-            "\",\"bid\":\"" + bid1 +
-            "\",\"spread\":\"" + (ask1[0] - bid1[0]) + "\"}###");
+        //log.logger.info("###{\"ch\":\"" + msg.tick.ch +
+        //   "\",\"ask\":\"" + ask1 +
+        //   "\",\"bid\":\"" + bid1 +
+        //   "\",\"spread\":\"" + (ask1[0] - bid1[0]) + "\"}###");
     }
 
     static t100_stgy(msg) {
