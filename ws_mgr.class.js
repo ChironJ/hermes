@@ -3,7 +3,8 @@ const pako = require('pako');
 const config = require('./config/data_stgy.json');
 const DataStgy = require('./stgy/data_stgy');
 
-var log = require('./log');
+const log = require('./log');
+
 class WsMgr {
     constructor(url) {
         this._ws = new WebSocket(url);
@@ -14,6 +15,7 @@ class WsMgr {
             this.agentchain.set(x, DataStgy[x]);
         }
     }
+
     init_ws() {
         this._ws.on('open', () => {
             log.logger.info("socket open");
@@ -38,11 +40,17 @@ class WsMgr {
                 }
                 // handle(msg);
             } else {
-                log.logger.info("socket text "+ text);
+                log.logger.info("socket text " + text);
             }
         });
+        this._ws.on('error', (e) => {
+            log.logger.error(e);
+        });
     }
-    get_ws() { return this._ws; }
+
+    get_ws() {
+        return this._ws;
+    }
 
     ws_subscribe(symbol, type, id) {
         symbol = symbol || "BTC_CQ"
