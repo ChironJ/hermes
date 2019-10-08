@@ -4,12 +4,12 @@ const WsMgr = require('./ws_mgr.class.js');
 
 process.on('uncaughtException', (error => {
     log.logger.error(error);
-    // process.exit(1);
+    process.exit(1);
 }));
 
 process.on('unhandledRejection', (reason, p) => {
     log.logger.error('Unhandled Rejection at:', p, 'reason:', reason);
-    // process.exit(1);
+    process.exit(1);
 });
 
 async function main() {
